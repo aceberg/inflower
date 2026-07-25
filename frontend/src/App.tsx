@@ -17,13 +17,11 @@ function App() {
     <>
     <Header></Header>
     <div class="container-lg">
-      <div class="row">
-        <div class="col-md mt-4 mb-4">
+      
           <Router>
             <Route path="/" component={Body}/>
           </Router>
-        </div>
-      </div>
+      
     </div>
     </>
   )

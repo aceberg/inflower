@@ -27,6 +27,7 @@ func updateWallet(c *gin.Context) {
 	var wallet models.Wallet
 
 	wallet.Name = c.PostForm("name")
+	wallet.Currency = c.PostForm("currency")
 
 	id, err := strconv.Atoi(c.PostForm("id"))
 	check.IfError(err)

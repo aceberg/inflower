@@ -23,7 +23,7 @@ func getEntries(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, allEntries)
 }
 
-func updateEntry(c *gin.Context) {
+func addEntry(c *gin.Context) {
 	var entry models.Entry
 
 	entry.Date = c.PostForm("date")
@@ -32,21 +32,13 @@ func updateEntry(c *gin.Context) {
 	entry.Category = c.PostForm("category")
 	entry.Note = c.PostForm("note")
 
-	id, err := strconv.Atoi(c.PostForm("id"))
-	check.IfError(err)
-
 	amount, err := strconv.ParseInt(c.PostForm("amount"), 10, 64)
-	if !check.IfError(err) {
-
-		entry.ID = id
+	if check.IfError(err) || amount == 0 || entry.Date == "" {
+		c.JSON(http.StatusInternalServerError, gin.H{"ok": false})
+	} else {
 		entry.Amount = amount
 		gdb.UpdateEntry(entry)
 
 		c.JSON(http.StatusOK, gin.H{"ok": true})
-	} else {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"ok":    false,
-			"error": err.Error(),
-		})
 	}
 }

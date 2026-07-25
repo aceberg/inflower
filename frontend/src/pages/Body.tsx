@@ -1,35 +1,23 @@
-import { For } from "solid-js"
-import { allEntries } from "../functions/exports"
-import TableRow from "../components/Body/TableRow"
+import AddRow from "../components/Body/AddRow"
+import EntryCard from "../components/Body/EntryCard"
+import WalletCard from "../components/Body/WalletCard"
 
 function Body() {
 
   return (
-    <div class="card border-primary">
-      <div class="card-header">
-        <p>Hello</p>
-      </div>
-      <div class="card-body table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Date</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Category</th>
-              <th>Amount</th>
-              <th>Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            <For each={allEntries}>{(entry) =>
-              <TableRow entry={entry}></TableRow>
-            }</For>
-          </tbody>
-        </table>
-      </div>
+  <>
+  <div class="row">
+    <AddRow></AddRow>
+  </div>
+  <div class="row">
+    <div class="col-9 mt-4 mb-4">
+      <EntryCard></EntryCard>
     </div>
+    <div class="col-3 mt-4 mb-4">
+      <WalletCard></WalletCard>
+    </div>
+  </div>
+  </>
   )
 }
 

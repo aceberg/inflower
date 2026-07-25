@@ -21,6 +21,13 @@ export interface Entry {
 	Note:     string;
 };
 
+export interface Wallet {
+	ID:       number;
+	Name:     string;
+	Amount:   number;
+	Currency: string;
+}
+
 export const emptyEntry:Entry = {
 	ID:    0,
 	Date: "",
@@ -41,5 +48,11 @@ export const emptyConf:Conf = {
 	LogLevel: "",
 };
 
+export const today = new Date().toISOString().slice(0, 10);
+
 export const [allEntries, setAllEntries] = createStore<Entry[]>([]);
+export const [allWallets, setAllWallets] = createStore<Wallet[]>([]);
+
 export const [appConfig, setAppConfig] = createSignal<Conf>(emptyConf);
+export const [walletList, setWalletList] = createSignal<string[]>([]);
+export const [catList, setCatList] = createSignal<string[]>([]);
