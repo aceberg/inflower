@@ -1,4 +1,4 @@
-import { onMount } from "solid-js";
+import { lazy, onMount } from "solid-js";
 import { Router, Route } from "@solidjs/router";
 import './App.css';
 
@@ -9,19 +9,20 @@ import { runAtStart } from "./functions/atstart";
 
 function App() {
 
-  onMount(() => {
-    runAtStart();
+  onMount(async () => {
+    await runAtStart();
   });
+
+  const Config = lazy(() => import("./pages/Config"));
 
   return (
     <>
     <Header></Header>
     <div class="container-lg">
-      
-          <Router>
-            <Route path="/" component={Body}/>
-          </Router>
-      
+      <Router>
+        <Route path="/" component={Body}/>
+        <Route path="/config" component={Config}/>
+      </Router>
     </div>
     </>
   )

@@ -1,16 +1,24 @@
 import { For } from "solid-js"
-import { allEntries } from "../../functions/exports"
+import { allEntries, setShowEnties, showEnties } from "../../functions/exports"
 import EntryRow from "./EntryRow"
+import { syncEntries } from "../../functions/atstart";
 
 function EntryCard() {
+
+  const update = (value: string) => {
+    setShowEnties(value);
+    syncEntries();
+    localStorage.setItem("showEnties", value);
+  };
 
   return (
   <div class="card border-primary">
     <div class="card-header">
-      <select class="form-select w-auto">
-        <option>Today</option>
-        <option>Week</option>
-        <option>Month</option>
+      <select class="form-select form-select-sm w-auto" value={showEnties()}
+        onChange={e => update(e.currentTarget.value)}>
+        <option value="today">Today</option>
+        <option value="decade">Decade</option>
+        <option value="month">Month</option>
       </select>
     </div>
     <div class="card-body table-responsive">
@@ -21,7 +29,8 @@ function EntryCard() {
             <th>From→To</th>
             <th>Category</th>
             <th>Amount</th>
-            <th>Note</th>
+            <th style="width: 12em;">Note</th>
+            <th style="width: 1em;"></th>
           </tr>
         </thead>
         <tbody>

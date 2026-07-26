@@ -1,35 +1,42 @@
 import { createSignal, For } from "solid-js";
 import { catList, emptyEntry, Entry, today, walletList } from "../../functions/exports";
 import { apiAddEntry } from "../../functions/api";
-import { syncEntries } from "../../functions/atstart";
+import { syncEntriesAndWallets } from "../../functions/atstart";
 
 function AddRow() {
 
+  const [emptyAmount, setEmptyAmount] = createSignal<string>("");
   const [newEntry, setNewEntry] = createSignal<Entry>({
     ...emptyEntry,
-    Date: today,
   });
 
   const update = (field: keyof Entry, value: string) => {
     setNewEntry(prev => ({
       ...prev,
-      [field]: field === "Amount" ? Number(value) : value,
+      [field]: field === "Amount"
+        ? Math.round(parseFloat(value || "0") * 100)
+        : value,
     }));
   };
 
   const handleAdd = async () => {
+    if (newEntry().Date === "") {
+      newEntry().Date = today();
+    }
     await apiAddEntry(newEntry());
     setNewEntry({
       ...emptyEntry,
       Date: newEntry().Date,
     });
-    await syncEntries();
+    setEmptyAmount("0");
+    setEmptyAmount("");
+    await syncEntriesAndWallets();
   };
 
   return (
     <div class="col-md mt-4">
       <div class="input-group">
-        <input type="date" class="form-control" placeholder="Date" value={newEntry().Date} onInput={e => update("Date", e.currentTarget.value)}></input>
+        <input type="date" class="form-control" placeholder="Date" value={today()} onInput={e => update("Date", e.currentTarget.value)}></input>
         <select class="form-select" value={newEntry().AccFrom} 
           onChange={e => update("AccFrom", e.currentTarget.value)}
         >
@@ -66,7 +73,7 @@ function AddRow() {
             )}
           </For>
         </select>
-        <input type="number" class="form-control" placeholder="Amount" value={newEntry().Amount} onInput={e => update("Amount", e.currentTarget.value)}></input>
+        <input type="text" class="form-control" placeholder="Amount" value={emptyAmount()} onInput={e => update("Amount", e.currentTarget.value)}></input>
         <input type="text" class="form-control" placeholder="Note" value={newEntry().Note} onInput={e => update("Note", e.currentTarget.value)} name="note"></input>
         <button type="submit" class="btn btn-primary" onClick={handleAdd}>Add</button>
       </div>

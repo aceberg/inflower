@@ -48,11 +48,11 @@ export const emptyConf:Conf = {
 	LogLevel: "",
 };
 
-export const today = new Date().toISOString().slice(0, 10);
-
 export const [allEntries, setAllEntries] = createStore<Entry[]>([]);
 export const [allWallets, setAllWallets] = createStore<Wallet[]>([]);
 
 export const [appConfig, setAppConfig] = createSignal<Conf>(emptyConf);
 export const [walletList, setWalletList] = createSignal<string[]>([]);
 export const [catList, setCatList] = createSignal<string[]>([]);
+export const [showEnties, setShowEnties] = createSignal<string>("month");
+export const [today, setToday] = createSignal<string>("");

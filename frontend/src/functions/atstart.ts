@@ -1,16 +1,32 @@
-import { apiGetAllEntries, apiGetAllWallets, apiGetCategories } from "./api";
-import { allWallets, Entry, setAllEntries, setAllWallets, setCatList, setWalletList } from "./exports";
+import { apiGetEntries, apiGetAllWallets, apiGetCategories, apiGetDate } from "./api";
+import { allWallets, Entry, setAllEntries, setAllWallets, setCatList, setShowEnties, setToday, setWalletList, showEnties } from "./exports";
 
-export function runAtStart() {
-  syncCategories();
-  syncEntries();
-  syncWallets();
+export async function runAtStart() {
+  const value = localStorage.getItem("showEnties");
+  if (value !== null && value !== "") {
+    setShowEnties(String(value));
+  }
+
+  const date = await apiGetDate();
+  if (String(date) === "") {
+    setToday(new Date().toJSON().slice(0, 10));
+  } else {
+    setToday(String(date));
+  }
+
+  await syncCategories();
+  await syncEntriesAndWallets();
+}
+
+export async function syncEntriesAndWallets() {
+  await syncEntries();
+  await syncWallets();
 }
 
 export async function syncEntries() {
-  const entries = await apiGetAllEntries();
+  const entries = await apiGetEntries(showEnties());
 
-  if (entries !== null && entries.length > 0) {
+  if (entries !== null) {
     entries.sort((a :Entry, b :Entry) => b.ID - a.ID);
     entries.sort((a :Entry, b :Entry) => b.Date.localeCompare(a.Date));
     setAllEntries(entries);
@@ -21,7 +37,7 @@ export async function syncWallets() {
   
   const wallets = await apiGetAllWallets();
 
-  if (wallets !== null && wallets.length > 0) {
+  if (wallets !== null) {
     setAllWallets(wallets);
 
     setWalletList(allWallets.map(w => w.Name));
@@ -32,7 +48,7 @@ export async function syncCategories() {
   
   const cats = await apiGetCategories()
 
-  if (cats !== null && cats.length > 0) {
+  if (cats !== null) {
     setCatList(cats);
   }
 }

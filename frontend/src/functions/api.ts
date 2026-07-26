@@ -2,8 +2,8 @@ import { Entry } from "./exports";
 
 export const apiPath = 'http://127.0.0.1:8840';
 
-export const apiGetAllEntries = async () => {
-  const url = apiPath+'/api/entry';
+export const apiGetEntries = async (period:string) => {
+  const url = apiPath+'/api/entry/'+period;
   const entries = await (await fetch(url)).json();
 
   return entries;
@@ -23,6 +23,13 @@ export const apiGetCategories = async () => {
   return cats;
 };
 
+export const apiGetDate = async () => {
+  const url = apiPath+'/api/date';
+  const date = await (await fetch(url)).json();
+
+  return date;
+}
+
 export const apiAddEntry = async (entry:Entry) => {
 
   let data = new FormData();
@@ -36,5 +43,12 @@ export const apiAddEntry = async (entry:Entry) => {
   await fetch(apiPath + "/api/entry", {
     method: "POST",
     body: data,
+  });
+};
+
+export const apiDelEntry = async (id:number) => {
+
+  await fetch(`${apiPath}/api/entry/${id}`, {
+    method: "DELETE",
   });
 };
