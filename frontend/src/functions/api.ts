@@ -1,6 +1,6 @@
 import { Entry } from "./exports";
 
-export const apiPath = 'http://127.0.0.1:8859';
+export const apiPath = 'http://127.0.0.1:8840';
 
 export const apiGetConfig = async () => {
   const url = apiPath+'/api/config';
