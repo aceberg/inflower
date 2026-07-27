@@ -10,11 +10,11 @@ import (
 func read(path string) (config models.Conf) {
 
 	viper.SetDefault("HOST", "0.0.0.0")
-	viper.SetDefault("PORT", "8840")
-	viper.SetDefault("THEME", "sand")
+	viper.SetDefault("PORT", "8859")
+	viper.SetDefault("THEME", "cerulean")
 	viper.SetDefault("COLOR", "dark")
 	viper.SetDefault("NODEPATH", "")
-	viper.SetDefault("LOG_LEVEL", "info")
+	viper.SetDefault("CATEGORIES", []string{"Food", "Cafe", "Home", "Me", "Clothes"})
 
 	viper.SetConfigFile(path)
 	viper.SetConfigType("yaml")
@@ -28,7 +28,8 @@ func read(path string) (config models.Conf) {
 	config.Theme = viper.Get("THEME").(string)
 	config.Color = viper.Get("COLOR").(string)
 	config.NodePath = viper.Get("NODEPATH").(string)
-	config.LogLevel = viper.Get("LOG_LEVEL").(string)
+
+	config.Categories = viper.GetStringSlice("CATEGORIES")
 
 	return config
 }

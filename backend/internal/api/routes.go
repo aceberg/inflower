@@ -19,6 +19,8 @@ func Routes(router *gin.Engine) {
 		r0.DELETE("/entry/:id", deleteEntry)
 
 		r0.GET("/category", getCategories)
+		r0.GET("/config", getConfig)
+		r0.POST("/config", saveConfig)
 
 		r0.GET("/wallet", getWallets)
 		r0.POST("/wallet", updateWallet)

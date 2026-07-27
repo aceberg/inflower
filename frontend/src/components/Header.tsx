@@ -1,12 +1,32 @@
 import { createSignal } from "solid-js";
+import { appConfig, setAppConfig } from "../functions/exports";
+import { apiGetConfig } from "../functions/api";
 
 function Header() {
 
   const [themePath, setThemePath] = createSignal('');
-  const [iconsPath, setIconsPath] = createSignal('');  
+  const [iconsPath, setIconsPath] = createSignal('');
+  
+  const setCurrentTheme = async () => {
+    setAppConfig(await apiGetConfig());
 
-  setThemePath("https://cdn.jsdelivr.net/npm/aceberg-bootswatch-fork@v5.3.3-2/dist/"+"grass"+"/bootstrap.min.css");
-  setIconsPath("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
+    const theme = appConfig().Theme?appConfig().Theme:"cerulean";
+    const color = appConfig().Color?appConfig().Color:"dark";
+    
+    if (appConfig().NodePath == '') {
+      setThemePath("https://cdn.jsdelivr.net/npm/aceberg-bootswatch-fork@v5.3.3-2/dist/"+theme+"/bootstrap.min.css");
+      setIconsPath("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
+    } else {
+      setThemePath(appConfig().NodePath+"/node_modules/bootswatch/dist/"+theme+"/bootstrap.min.css");
+      setIconsPath(appConfig().NodePath+"/node_modules/bootstrap-icons/font/bootstrap-icons.css");
+    }
+
+    document.documentElement.setAttribute("data-bs-theme", color);
+    color === "dark"
+      ? document.documentElement.style.setProperty('--transparent-light', '#ffffff15')
+      : document.documentElement.style.setProperty('--transparent-light', '#00000015');
+  }
+  setCurrentTheme();
 
   return (
     <>

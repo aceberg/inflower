@@ -1,5 +1,5 @@
 import { createSignal, For } from "solid-js";
-import { catList, emptyEntry, Entry, today, walletList } from "../../functions/exports";
+import { appConfig, emptyEntry, Entry, today, walletList } from "../../functions/exports";
 import { apiAddEntry } from "../../functions/api";
 import { syncEntriesAndWallets } from "../../functions/atstart";
 
@@ -65,7 +65,7 @@ function AddRow() {
           onChange={e => update("Category", e.currentTarget.value)}
         >
           <option value="" disabled>Category</option>
-          <For each={catList()}>
+          <For each={appConfig().Categories}>
             {cat => (
               <option value={cat}>
                 {cat}

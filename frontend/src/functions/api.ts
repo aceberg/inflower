@@ -1,6 +1,13 @@
 import { Entry } from "./exports";
 
-export const apiPath = 'http://127.0.0.1:8840';
+export const apiPath = 'http://127.0.0.1:8859';
+
+export const apiGetConfig = async () => {
+  const url = apiPath+'/api/config';
+  const res = await (await fetch(url)).json();
+
+  return res;
+};
 
 export const apiGetEntries = async (period:string) => {
   const url = apiPath+'/api/entry/'+period;
@@ -14,13 +21,6 @@ export const apiGetAllWallets = async () => {
   const wallets = await (await fetch(url)).json();
 
   return wallets;
-};
-
-export const apiGetCategories = async () => {
-  const url = apiPath+'/api/category';
-  const cats = await (await fetch(url)).json();
-
-  return cats;
 };
 
 export const apiGetDate = async () => {

@@ -15,12 +15,10 @@ ARG TARGETPLATFORM
 RUN CGO_ENABLED=0 xx-go build -ldflags='-w -s' -o /inflower ./cmd/inflower
 
 
-FROM alpine
+FROM scratch
 
+WORKDIR /data/inflower
 WORKDIR /app
-
-RUN apk add --no-cache arp-scan tzdata \
-    && mkdir /data
 
 COPY --from=builder /inflower /app/
 

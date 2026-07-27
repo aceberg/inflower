@@ -1,21 +1,26 @@
-import { apiGetEntries, apiGetAllWallets, apiGetCategories, apiGetDate } from "./api";
-import { allWallets, Entry, setAllEntries, setAllWallets, setCatList, setShowEnties, setToday, setWalletList, showEnties } from "./exports";
+import { apiGetEntries, apiGetAllWallets, apiGetDate } from "./api";
+import { allWallets, Entry, setAllEntries, setAllWallets, setShowEnties, setToday, setWalletList, showEnties } from "./exports";
 
 export async function runAtStart() {
+  
+  // "today", "decade" or "month" for the main page
   const value = localStorage.getItem("showEnties");
   if (value !== null && value !== "") {
     setShowEnties(String(value));
   }
 
+  await syncDate();
+
+  await syncEntriesAndWallets();
+}
+
+export async function syncDate() {
   const date = await apiGetDate();
   if (String(date) === "") {
     setToday(new Date().toJSON().slice(0, 10));
   } else {
     setToday(String(date));
   }
-
-  await syncCategories();
-  await syncEntriesAndWallets();
 }
 
 export async function syncEntriesAndWallets() {
@@ -41,14 +46,5 @@ export async function syncWallets() {
     setAllWallets(wallets);
 
     setWalletList(allWallets.map(w => w.Name));
-  }
-}
-
-export async function syncCategories() {
-  
-  const cats = await apiGetCategories()
-
-  if (cats !== null) {
-    setCatList(cats);
   }
 }

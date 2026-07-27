@@ -2,15 +2,15 @@ package check
 
 import (
 	"fmt"
-	"log/slog"
+	"log"
 )
 
-// IfError prints error, if it is not nil
+// IfError prints error, if it is not nil and returns true, otherwise returns false
 func IfError(err error) bool {
 	if err == nil {
 		return false
 	}
 
-	slog.Error(fmt.Sprintf("%v", err))
+	log.Printf("\x1b[31;1m%s\x1b[0m\n", fmt.Sprintf("ERROR: %s", err))
 	return true
 }

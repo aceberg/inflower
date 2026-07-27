@@ -1,7 +1,7 @@
 package conf
 
 import (
-	"log/slog"
+	"log"
 
 	"github.com/spf13/viper"
 
@@ -12,7 +12,7 @@ import (
 // Write - write config to file
 func Write(config models.Conf) {
 
-	slog.Info("Writing new config to " + config.ConfPath)
+	log.Println("INFO: Writing new config to " + config.ConfPath)
 
 	viper.SetConfigFile(config.ConfPath)
 	viper.SetConfigType("yaml")
@@ -22,7 +22,7 @@ func Write(config models.Conf) {
 	viper.Set("THEME", config.Theme)
 	viper.Set("COLOR", config.Color)
 	viper.Set("NODEPATH", config.NodePath)
-	viper.Set("LOG_LEVEL", config.LogLevel)
+	viper.Set("CATEGORIES", config.Categories)
 
 	err := viper.WriteConfig()
 	check.IfError(err)

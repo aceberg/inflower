@@ -1,0 +1,7 @@
+.entry-delete {
+    visibility: hidden;
+}
+
+tr:hover .entry-delete {
+    visibility: visible;
+}

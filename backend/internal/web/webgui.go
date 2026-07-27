@@ -3,7 +3,7 @@ package web
 import (
 	"embed"
 	"html/template"
-	"log/slog"
+	"log"
 	"net/http"
 
 	"github.com/aceberg/inflower/internal/api"
@@ -35,10 +35,9 @@ func Gui() {
 
 	address := conf.AppConfig.Host + ":" + conf.AppConfig.Port
 
-	slog.Info(colorCyan + "\n=================================== " +
+	log.Println(colorCyan + "\n=================================== " +
 		"\n  inflower Version: " + conf.AppConfig.Version +
 		"\n  Config dir: " + conf.AppConfig.DirPath +
-		"\n  Log level: " + conf.AppConfig.LogLevel +
 		"\n  Web GUI: http://" + address +
 		"\n=================================== " + colorReset)
 

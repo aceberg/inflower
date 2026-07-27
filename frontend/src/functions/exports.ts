@@ -6,9 +6,8 @@ export interface Conf {
 	Port:	   string;
 	Theme:	   string;
 	Color:     string;
-	DirPath:   string;
 	NodePath:  string;
-	LogLevel:  string;
+	Categories: string[];
 };
 
 export interface Entry {
@@ -41,11 +40,10 @@ export const emptyEntry:Entry = {
 export const emptyConf:Conf = {
 	Host:	 "",
 	Port:	 "",
-	Theme:	 "sand",
-	Color:   "dark",
-	DirPath: "",
+	Theme:	 "",
+	Color:   "",
 	NodePath: "",
-	LogLevel: "",
+	Categories: [],
 };
 
 export const [allEntries, setAllEntries] = createStore<Entry[]>([]);
@@ -53,6 +51,6 @@ export const [allWallets, setAllWallets] = createStore<Wallet[]>([]);
 
 export const [appConfig, setAppConfig] = createSignal<Conf>(emptyConf);
 export const [walletList, setWalletList] = createSignal<string[]>([]);
-export const [catList, setCatList] = createSignal<string[]>([]);
+
 export const [showEnties, setShowEnties] = createSignal<string>("month");
 export const [today, setToday] = createSignal<string>("");

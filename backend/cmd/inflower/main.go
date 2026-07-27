@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 
+	_ "time/tzdata"
+
 	"github.com/aceberg/inflower/internal/conf"
 	"github.com/aceberg/inflower/internal/gdb"
 	"github.com/aceberg/inflower/internal/web"

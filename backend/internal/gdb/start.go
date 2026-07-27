@@ -2,7 +2,6 @@ package gdb
 
 import (
 	"log"
-	"log/slog"
 	"os"
 	"time"
 
@@ -54,7 +53,7 @@ func Connect() {
 	db, err = gorm.Open(sqlite.Open(conf.AppConfig.DBPath), gormConf)
 
 	if !check.IfError(err) {
-		slog.Info("Connected to DB: SQLite")
+		log.Println("INFO: Connected to DB: SQLite")
 		db.Exec("PRAGMA journal_mode = wal;")
 		db.Exec("PRAGMA busy_timeout = 5000;")
 	}

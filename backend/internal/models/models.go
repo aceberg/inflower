@@ -2,16 +2,16 @@ package models
 
 // Conf - app config
 type Conf struct {
-	Host     string
-	Port     string
-	Theme    string
-	Color    string
-	DirPath  string
-	ConfPath string
-	DBPath   string
-	NodePath string
-	LogLevel string
-	Version  string
+	Host       string
+	Port       string
+	Theme      string
+	Color      string
+	DirPath    string
+	ConfPath   string
+	DBPath     string
+	NodePath   string
+	Version    string
+	Categories []string
 }
 
 // Entry is a money movement
