@@ -35,9 +35,9 @@ function AddRow() {
 
   return (
     <div class="col-md mt-4">
-      <div class="input-group">
-        <input type="date" class="form-control" placeholder="Date" value={today()} onInput={e => update("Date", e.currentTarget.value)}></input>
-        <select class="form-select" value={newEntry().AccFrom} 
+      <div class="input-group d-flex flex-column flex-sm-row">
+        <input type="date" class="form-control w-auto" placeholder="Date" value={today()} onInput={e => update("Date", e.currentTarget.value)}></input>
+        <select class="form-select w-auto" value={newEntry().AccFrom} 
           onChange={e => update("AccFrom", e.currentTarget.value)}
         >
           <option value="" disabled>From</option>
@@ -49,7 +49,7 @@ function AddRow() {
             )}
           </For>
         </select>
-        <select class="form-select" value={newEntry().AccTo} 
+        <select class="form-select w-auto" value={newEntry().AccTo} 
           onChange={e => update("AccTo", e.currentTarget.value)}
         >
           <option value="" disabled>To</option>
@@ -61,7 +61,7 @@ function AddRow() {
             )}
           </For>
         </select>
-        <select class="form-select" value={newEntry().Category} 
+        <select class="form-select w-auto" value={newEntry().Category} 
           onChange={e => update("Category", e.currentTarget.value)}
         >
           <option value="" disabled>Category</option>
@@ -73,8 +73,8 @@ function AddRow() {
             )}
           </For>
         </select>
-        <input type="text" class="form-control" placeholder="Amount" value={emptyAmount()} onInput={e => update("Amount", e.currentTarget.value)}></input>
-        <input type="text" class="form-control" placeholder="Note" value={newEntry().Note} onInput={e => update("Note", e.currentTarget.value)} name="note"></input>
+        <input type="text" class="form-control w-auto" placeholder="Amount" value={emptyAmount()} onInput={e => update("Amount", e.currentTarget.value)}></input>
+        <input type="text" class="form-control w-auto" placeholder="Note" value={newEntry().Note} onInput={e => update("Note", e.currentTarget.value)} name="note"></input>
         <button type="submit" class="btn btn-primary" onClick={handleAdd}>Add</button>
       </div>
     </div>

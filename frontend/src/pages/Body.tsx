@@ -9,11 +9,11 @@ function Body() {
   <div class="row">
     <AddRow></AddRow>
   </div>
-  <div class="row">
-    <div class="col-9 mt-4 mb-4">
+  <div class="row mt-4">
+    <div class="col-md-9 mb-4">
       <EntryCard></EntryCard>
     </div>
-    <div class="col-3 mt-4 mb-4">
+    <div class="col-md-3 mb-4">
       <WalletCard></WalletCard>
     </div>
   </div>

@@ -6,6 +6,7 @@ import Body from './pages/Body';
 import Header from './components/Header';
 import { runAtStart } from "./functions/atstart";
 
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
   });
 
   const Config = lazy(() => import("./pages/Config"));
+  const History = lazy(() => import("./pages/History"));
   const Months = lazy(() => import("./pages/Months"));
 
   return (
@@ -23,6 +25,7 @@ function App() {
       <Router>
         <Route path="/" component={Body}/>
         <Route path="/config" component={Config}/>
+        <Route path="/history" component={History}/>
         <Route path="/months" component={Months}/>
       </Router>
     </div>
