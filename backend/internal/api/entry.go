@@ -39,6 +39,9 @@ func getEntries(c *gin.Context) {
 	case "month":
 		date = time.Now().Format("2006-01")
 		entries = gdb.SelectEntriesByDate(date)
+	case "prevm":
+		date = time.Now().AddDate(0, -1, 0).Format("2006-01")
+		entries = gdb.SelectEntriesByDate(date)
 	default:
 		entries, _ = gdb.SelectEntries()
 	}
@@ -64,14 +67,15 @@ func addEntry(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"ok": false})
 	} else {
 		entry.Amount = amount
+		entry.Currency = entryToWallet(entry.AccFrom, entry.AccTo, entry.Amount)
+
 		gdb.UpdateEntry(entry)
-		entryToWallet(entry.AccFrom, entry.AccTo, entry.Amount)
 
 		c.JSON(http.StatusOK, gin.H{"ok": true})
 	}
 }
 
-func entryToWallet(accFrom, accTo string, amount int64) {
+func entryToWallet(accFrom, accTo string, amount int64) (currency string) {
 	var wallet models.Wallet
 
 	if accFrom != "" {
@@ -85,4 +89,6 @@ func entryToWallet(accFrom, accTo string, amount int64) {
 		wallet.Amount = wallet.Amount + amount
 		gdb.UpdateWallet(wallet)
 	}
+
+	return wallet.Currency
 }

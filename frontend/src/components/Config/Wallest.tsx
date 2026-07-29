@@ -39,22 +39,22 @@ function Wallets() {
               <th>Hide *</th>
               <th>Name</th>
               <th class="d-flex flex-row-reverse">Amount</th>
-              <th></th>
-              <th>Del</th>
+              <th style="width: 3em;"></th>
+              <th style="width: 2em;">Del</th>
             </tr>
           </thead>
           <tbody>
           <For each={allWallets}>{(wallet) =>
             <tr>
               <td>
-                <div class="form-check">
+                <div class="form-check form-switch">
                   <input type="checkbox" class="form-check-input" checked={wallet.Hide} onChange={() => handleHide(wallet.ID)}/>
                 </div>
               </td>
               <td>{wallet.Name}</td>
               <td class="d-flex flex-row-reverse">{(wallet.Amount/100).toFixed(2)}</td>
               <td>{wallet.Currency}</td>
-              <td class="btn" onClick={() => handleDelete(wallet.ID, wallet.Name)}>
+              <td class="my-btn" onClick={() => handleDelete(wallet.ID, wallet.Name)}>
                 <i class="bi bi-x-square opacity-50"></i>
               </td>
             </tr>

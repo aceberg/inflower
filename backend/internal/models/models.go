@@ -22,6 +22,7 @@ type Entry struct {
 	AccTo    string
 	Category string
 	Amount   int64
+	Currency string
 	Note     string
 }
 

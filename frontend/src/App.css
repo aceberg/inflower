@@ -17,17 +17,11 @@
     background-color: var(--transparent-light);
 }
 
-/* History box */
-.my-box-on::before, .my-box-off::before {
-    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='18'></svg>");
-    border-left: thin solid black;
+/* Hide del button */
+.entry-delete {
+    visibility: hidden;
 }
-.my-box-on {
-    background-color: var(--bs-success);
-}
-.my-box-off {
-    background-color: var(--bs-gray-500);
-}
-.my-box-on:hover, .my-box-off:hover {
-    background-color: #0000001a;
+
+tr:hover .entry-delete {
+    visibility: visible;
 }

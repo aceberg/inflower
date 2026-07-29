@@ -51,10 +51,10 @@ func Gui() {
 
 	router.StaticFS("/fs/", http.FS(pubFS)) // public
 
-	router.GET("/", indexHandler)          // index.go
-	router.GET("/config", indexHandler)    // index.go
-	router.GET("/history", indexHandler)   // index.go
-	router.GET("/host/*any", indexHandler) // index.go
+	router.GET("/", indexHandler)        // index.go
+	router.GET("/config", indexHandler)  // index.go
+	router.GET("/history", indexHandler) // index.go
+	router.GET("/months", indexHandler)  // index.go
 
 	api.Routes(router)
 

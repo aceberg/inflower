@@ -47,6 +47,9 @@ function Header() {
           <li class="nav-item">
             <a class="nav-link active" href="/history/" title="History">History</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/months/" title="Months">Months</a>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">

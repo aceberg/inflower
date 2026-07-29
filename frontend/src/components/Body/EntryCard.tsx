@@ -28,7 +28,8 @@ function EntryCard() {
             <th>Date</th>
             <th>From→To</th>
             <th>Category</th>
-            <th>Amount</th>
+            <th class="d-flex flex-row-reverse">Amount</th>
+            <th></th>
             <th style="width: 12em;">Note</th>
             <th style="width: 1em;"></th>
           </tr>

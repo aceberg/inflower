@@ -17,6 +17,7 @@ export interface Entry {
 	AccTo:    string;
 	Category: string;
 	Amount:   number;
+	Currency: string;
 	Note:     string;
 };
 
@@ -35,6 +36,7 @@ export const emptyEntry:Entry = {
 	AccTo: "",
 	Category: "",
 	Amount: 0,
+	Currency: "",
 	Note: ""
 };
 
