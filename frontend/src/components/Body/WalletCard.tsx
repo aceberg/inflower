@@ -3,9 +3,11 @@ import { allWallets } from "../../functions/exports"
 import WalletRow from "./WalletRow"
 
 function WalletCard() {
-
+  
   const totals = createMemo(() =>
     allWallets.reduce<Record<string, number>>((acc, wallet) => {
+      if (wallet.Hide) return acc;
+
       acc[wallet.Currency] = (acc[wallet.Currency] ?? 0) + wallet.Amount;
       return acc;
     }, {})
@@ -20,20 +22,16 @@ function WalletCard() {
       <table class="table table-sm table-hover table-borderless">
         <tbody>
           <For each={allWallets}>{(wallet) =>
-            <WalletRow wallet={wallet}></WalletRow>
+            !wallet.Hide && <WalletRow wallet={wallet} />
           }</For>
-        </tbody>
-      </table>
-      <hr></hr>
-      <table class="table table-sm table-hover table-borderless">
-        <thead>
           <tr>
-            <th style="width: 10em;">Total</th>
-            <th></th>
-            <th></th>
+            <td colSpan={3}><hr></hr></td>
           </tr>
-        </thead>
-        <tbody>
+          <tr>
+            <td><b>Total</b></td>
+            <td></td>
+            <td></td>
+          </tr>
           <For each={Object.entries(totals())}>
             {([currency, amount]) => (
             <tr>

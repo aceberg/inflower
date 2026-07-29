@@ -31,4 +31,5 @@ type Wallet struct {
 	Name     string
 	Amount   int64
 	Currency string
+	Hide     bool
 }

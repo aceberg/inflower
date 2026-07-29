@@ -25,6 +25,7 @@ export interface Wallet {
 	Name:     string;
 	Amount:   number;
 	Currency: string;
+	Hide:    boolean;
 }
 
 export const emptyEntry:Entry = {

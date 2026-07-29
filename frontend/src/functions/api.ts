@@ -52,3 +52,17 @@ export const apiDelEntry = async (id:number) => {
     method: "DELETE",
   });
 };
+
+export const apiDelWallet = async (id:number) => {
+
+  await fetch(`${apiPath}/api/wallet/${id}`, {
+    method: "DELETE",
+  });
+};
+
+export const apiHideWallet = async (id:number) => {
+
+  await fetch(`${apiPath}/api/wallet/hide/${id}`, {
+    method: "GET",
+  });
+};

@@ -49,3 +49,12 @@ func SelectWalletByName(name string) (wallet models.Wallet) {
 
 	return wallet
 }
+
+// SelectWalletByID - get Wallet
+func SelectWalletByID(id int) (wallet models.Wallet) {
+
+	tab := db.Table("wallets")
+	tab.First(&wallet, id)
+
+	return wallet
+}

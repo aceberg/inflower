@@ -60,7 +60,6 @@ function Basic() {
             <tr>
               <td><button type="submit" class="btn btn-primary">Save</button></td>
               <td></td>
-              <td></td>
             </tr>
           </tbody>
           </table>

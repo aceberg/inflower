@@ -18,21 +18,15 @@ func Routes(router *gin.Engine) {
 		r0.POST("/entry", addEntry)
 		r0.DELETE("/entry/:id", deleteEntry)
 
-		r0.GET("/category", getCategories)
+		r0.POST("/category", saveCategories)
 		r0.GET("/config", getConfig)
 		r0.POST("/config", saveConfig)
 
 		r0.GET("/wallet", getWallets)
-		r0.POST("/wallet", updateWallet)
+		r0.POST("/wallet", addWallet)
 		r0.DELETE("/wallet/:id", deleteWallet)
+		r0.GET("/wallet/hide/:id", hideWallet)
 	}
-}
-
-func getCategories(c *gin.Context) {
-
-	cats := []string{"Food", "Cafe", "Home", "Me", "Clothes"}
-
-	c.IndentedJSON(http.StatusOK, cats)
 }
 
 func getDate(c *gin.Context) {
