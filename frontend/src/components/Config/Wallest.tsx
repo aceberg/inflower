@@ -54,7 +54,7 @@ function Wallets() {
               <td>{wallet.Name}</td>
               <td class="d-flex flex-row-reverse">{(wallet.Amount/100).toFixed(2)}</td>
               <td>{wallet.Currency}</td>
-              <td class="my-btn" onClick={() => handleDelete(wallet.ID, wallet.Name)}>
+              <td class="my-btn" onClick={() => handleDelete(wallet.ID, wallet.Name)} title="Delete">
                 <i class="bi bi-x-square opacity-50"></i>
               </td>
             </tr>

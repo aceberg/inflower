@@ -10,11 +10,23 @@ function AddRow() {
     ...emptyEntry,
   });
 
+  const parseAmount = (value: string): number => {
+    if (!/^[\d+\-*/().\s]+$/.test(value)) {
+      return 0;
+    }
+
+    try {
+      return Number(Function(`"use strict"; return (${value})`)());
+    } catch {
+      return 0;
+    }
+  };
+
   const update = (field: keyof Entry, value: string) => {
     setNewEntry(prev => ({
       ...prev,
       [field]: field === "Amount"
-        ? Math.round(parseFloat(value || "0") * 100)
+        ? Math.round(parseAmount(value) * 100)
         : value,
     }));
   };

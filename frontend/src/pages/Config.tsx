@@ -1,9 +1,15 @@
+import { onMount } from "solid-js";
 import Basic from "../components/Config/Basic"
 import Category from "../components/Config/Category"
 import Wallets from "../components/Config/Wallest"
+import { syncWallets } from "../functions/atstart";
 
 
 function Config() {
+
+  onMount(async () => {
+    await syncWallets();
+  });
 
   return (
     <div class="row mb-4">

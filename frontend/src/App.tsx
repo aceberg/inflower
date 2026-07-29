@@ -1,18 +1,13 @@
-import { lazy, onMount } from "solid-js";
+import { lazy } from "solid-js";
 import { Router, Route } from "@solidjs/router";
 import './App.css';
 
 import Body from './pages/Body';
 import Header from './components/Header';
-import { runAtStart } from "./functions/atstart";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function App() {
-
-  onMount(async () => {
-    await runAtStart();
-  });
 
   const Config = lazy(() => import("./pages/Config"));
   const History = lazy(() => import("./pages/History"));

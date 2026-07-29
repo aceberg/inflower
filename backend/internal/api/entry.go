@@ -42,6 +42,9 @@ func getEntries(c *gin.Context) {
 	case "prevm":
 		date = time.Now().AddDate(0, -1, 0).Format("2006-01")
 		entries = gdb.SelectEntriesByDate(date)
+	case "year":
+		date = time.Now().Format("2006")
+		entries = gdb.SelectEntriesByDate(date)
 	default:
 		entries, _ = gdb.SelectEntries()
 	}

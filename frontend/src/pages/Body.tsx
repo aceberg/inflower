@@ -1,8 +1,14 @@
+import { onMount } from "solid-js";
 import AddRow from "../components/Body/AddRow"
 import EntryCard from "../components/Body/EntryCard"
 import WalletCard from "../components/Body/WalletCard"
+import { runAtStart } from "../functions/atstart";
 
 function Body() {
+
+  onMount(async () => {
+    await runAtStart();
+  });
 
   return (
   <>

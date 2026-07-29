@@ -1,3 +1,4 @@
+import { Show } from "solid-js";
 import { apiDelEntry } from "../../functions/api";
 import { syncEntriesAndWallets } from "../../functions/atstart";
 
@@ -34,9 +35,18 @@ function EntryRow(_props: any) {
       <td class="d-flex flex-row-reverse">{amountPrefix}&nbsp;&nbsp;{(_props.entry.Amount/100).toFixed(2)}</td>
       <td>{_props.entry.Currency}</td>
       <td>{_props.entry.Note}</td>
-      <td onClick={handleDelete} class="entry-delete my-btn rounded-0" title="Delete">
-        <i class="bi bi-x"></i>
-      </td>
+      <Show
+        when={_props.history}
+        fallback={
+          <td onClick={handleDelete} class="entry-delete my-btn rounded-0" title="Delete">
+            <i class="bi bi-x"></i>
+          </td>
+        }
+      >
+        <td class="my-btn" onClick={handleDelete} title="Delete">
+          <i class="bi bi-x-square opacity-50"></i>
+        </td>
+      </Show>
     </tr>
   </>
   )

@@ -1,6 +1,6 @@
 import { For } from "solid-js"
 import { allEntries, setShowEnties, showEnties } from "../../functions/exports"
-import EntryRow from "./EntryRow"
+import EntryRow from "../All/EntryRow"
 import { syncEntries } from "../../functions/atstart";
 
 function EntryCard() {
