@@ -1,6 +1,7 @@
 import { Show } from "solid-js";
 import { apiDelEntry } from "../../functions/api";
 import { syncEntriesAndWallets } from "../../functions/atstart";
+import { SquareXIcon, XIcon } from "../../functions/icons";
 
 let beforeDate = "";
 
@@ -39,12 +40,12 @@ function EntryRow(_props: any) {
         when={_props.history}
         fallback={
           <td onClick={handleDelete} class="entry-delete my-btn rounded-0" title="Delete">
-            <i class="bi bi-x"></i>
+            <XIcon></XIcon>
           </td>
         }
       >
         <td class="my-btn" onClick={handleDelete} title="Delete">
-          <i class="bi bi-x-square opacity-50"></i>
+          <SquareXIcon></SquareXIcon>
         </td>
       </Show>
     </tr>

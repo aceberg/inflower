@@ -1,5 +1,6 @@
 import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
+import { apiPath } from "./api";
 
 export interface Conf {
 	Host:	   string;
@@ -53,6 +54,7 @@ export const [allEntries, setAllEntries] = createStore<Entry[]>([]);
 export const [allWallets, setAllWallets] = createStore<Wallet[]>([]);
 
 export const [appConfig, setAppConfig] = createSignal<Conf>(emptyConf);
+export const [themePath, setThemePath] = createSignal(apiPath+"/fs/public/themes/cerulean/bootstrap.min.css");
 export const [walletList, setWalletList] = createSignal<string[]>([]);
 
 export const [showEnties, setShowEnties] = createSignal<string>("month");

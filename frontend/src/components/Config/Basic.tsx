@@ -1,10 +1,19 @@
 import { For, Show } from "solid-js";
 import { apiPath } from "../../functions/api"
-import { appConfig } from "../../functions/exports"
+import { appConfig, setThemePath } from "../../functions/exports"
+import { changeBackColor } from "../../functions/atstart";
 
 function Basic() {
 
   const themes = ["cerulean", "cosmo", "cyborg", "darkly", "emerald", "flatly", "grass", "grayscale", "journal", "litera", "lumen", "lux", "materia", "minty", "morph", "ocean", "pulse", "quartz", "sand", "sandstone", "simplex", "sketchy", "slate", "solar", "spacelab", "superhero", "united", "vapor", "wood", "yeti", "zephyr"];
+
+  const handleTheme = (theme:string) => {
+    setThemePath(apiPath+"/fs/public/themes/"+theme+"/bootstrap.min.css");
+  };
+
+  const handleColor = (color:string) => {
+    changeBackColor(color);
+  };
 
   return (
     <div class="card border-primary">
@@ -24,7 +33,7 @@ function Basic() {
             <tr>
               <td>Theme</td>
               <td>
-                <select name="theme" class="form-select">
+                <select name="theme" class="form-select" onChange={(e)=>handleTheme(e.currentTarget.value)}>
                 <For each={themes}>{theme =>
                   <Show
                     when={theme == appConfig().Theme}
@@ -39,7 +48,7 @@ function Basic() {
             <tr>
                <td>Color mode</td>
                <td>
-                <select name="color" class="form-select">
+                <select name="color" class="form-select" onChange={(e)=>handleColor(e.currentTarget.value)}>
                 <Show
                   when={appConfig().Color == "dark"}
                   fallback={<>

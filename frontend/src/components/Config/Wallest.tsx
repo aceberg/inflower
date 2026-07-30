@@ -2,6 +2,7 @@ import { createMemo, For } from "solid-js"
 import { allWallets } from "../../functions/exports"
 import { apiDelWallet, apiHideWallet, apiPath } from "../../functions/api";
 import { syncWallets } from "../../functions/atstart";
+import { SquareXIcon } from "../../functions/icons";
 
 function Wallets() {
 
@@ -55,7 +56,7 @@ function Wallets() {
               <td class="d-flex flex-row-reverse">{(wallet.Amount/100).toFixed(2)}</td>
               <td>{wallet.Currency}</td>
               <td class="my-btn" onClick={() => handleDelete(wallet.ID, wallet.Name)} title="Delete">
-                <i class="bi bi-x-square opacity-50"></i>
+                <SquareXIcon></SquareXIcon>
               </td>
             </tr>
           }</For>

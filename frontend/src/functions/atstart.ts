@@ -1,5 +1,5 @@
-import { apiGetEntries, apiGetAllWallets, apiGetDate } from "./api";
-import { allWallets, Entry, setAllEntries, setAllWallets, setShowEnties, setToday, setWalletList, showEnties } from "./exports";
+import { apiGetEntries, apiGetAllWallets, apiGetDate, apiGetConfig, apiPath } from "./api";
+import { allWallets, appConfig, Entry, setAllEntries, setAllWallets, setAppConfig, setShowEnties, setThemePath, setToday, setWalletList, showEnties } from "./exports";
 
 export async function runAtStart() {
   
@@ -9,9 +9,9 @@ export async function runAtStart() {
     setShowEnties(String(value));
   }
 
-  await syncDate();
+  await syncAppConfig();
 
-  await syncEntriesAndWallets();
+  await syncDate();
 }
 
 export async function syncDate() {
@@ -47,4 +47,22 @@ export async function syncWallets() {
 
     setWalletList(allWallets.map(w => w.Name));
   }
+}
+
+const syncAppConfig = async () => {
+  setAppConfig(await apiGetConfig());
+
+  const theme = appConfig().Theme?appConfig().Theme:"cerulean";
+  const color = appConfig().Color?appConfig().Color:"dark";
+
+  changeBackColor(color);
+
+  setThemePath(apiPath+"/fs/public/themes/"+theme+"/bootstrap.min.css");
+}
+
+export const changeBackColor = (color:string) => {
+  document.documentElement.setAttribute("data-bs-theme", color);
+  color === "dark"
+    ? document.documentElement.style.setProperty('--transparent-light', '#ffffff15')
+    : document.documentElement.style.setProperty('--transparent-light', '#00000015');
 }
