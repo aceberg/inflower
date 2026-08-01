@@ -2,7 +2,7 @@ package api
 
 import (
 	"net/http"
-	"strconv"
+	"strings"
 	"time"
 
 	"github.com/aceberg/inflower/internal/check"
@@ -13,63 +13,43 @@ import (
 
 func deleteEntry(c *gin.Context) {
 
-	id, err := strconv.Atoi(c.Param("id"))
-	if !check.IfError(err) {
+	id, ok := paramID(c)
+	if ok {
 		entry := gdb.SelectEntryByID(id)
 		entryToWallet(entry.AccTo, entry.AccFrom, entry.Amount)
 		gdb.DeleteEntry(id)
 	}
+	c.Status(http.StatusNoContent)
 }
 
 func getEntries(c *gin.Context) {
 	var entries []models.Entry
 
-	period := c.Param("period")
-	period = period[1:]
-	date := ""
+	date := strings.TrimPrefix(c.Param("date"), "/")
 
-	switch period {
-	case "today":
-		date = time.Now().Format("2006-01-02")
+	if date != "" {
 		entries = gdb.SelectEntriesByDate(date)
-	case "decade":
-		date = time.Now().Format("2006-01-02")
-		date = date[:9]
-		entries = gdb.SelectEntriesByDate(date)
-	case "month":
-		date = time.Now().Format("2006-01")
-		entries = gdb.SelectEntriesByDate(date)
-	case "prevm":
-		date = time.Now().AddDate(0, -1, 0).Format("2006-01")
-		entries = gdb.SelectEntriesByDate(date)
-	case "year":
-		date = time.Now().Format("2006")
-		entries = gdb.SelectEntriesByDate(date)
-	default:
+	} else {
 		entries, _ = gdb.SelectEntries()
 	}
 
-	c.IndentedJSON(http.StatusOK, entries)
+	c.JSON(http.StatusOK, entries)
 }
 
 func addEntry(c *gin.Context) {
 	var entry models.Entry
 
-	entry.Date = c.PostForm("date")
-	entry.AccFrom = c.PostForm("acc_from")
-	entry.AccTo = c.PostForm("acc_to")
-	entry.Category = c.PostForm("category")
-	entry.Note = c.PostForm("note")
+	err := c.ShouldBind(&entry)
 
-	if entry.Date == "" {
-		entry.Date = time.Now().Format("2006-01-02")
-	}
+	if check.IfError(err) || entry.Amount == 0 {
 
-	amount, err := strconv.ParseInt(c.PostForm("amount"), 10, 64)
-	if check.IfError(err) || amount == 0 {
-		c.JSON(http.StatusInternalServerError, gin.H{"ok": false})
+		c.JSON(http.StatusBadRequest, gin.H{"ok": false})
 	} else {
-		entry.Amount = amount
+
+		if entry.Date == "" {
+			entry.Date = time.Now().Format("2006-01-02")
+		}
+
 		entry.Currency = entryToWallet(entry.AccFrom, entry.AccTo, entry.Amount)
 
 		gdb.UpdateEntry(entry)

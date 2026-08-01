@@ -2,8 +2,10 @@ package api
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
+	"github.com/aceberg/inflower/internal/check"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,7 +16,7 @@ func Routes(router *gin.Engine) {
 	{
 		r0.GET("/date", getDate)
 
-		r0.GET("/entry/*period", getEntries)
+		r0.GET("/entry/*date", getEntries)
 		r0.POST("/entry", addEntry)
 		r0.DELETE("/entry/:id", deleteEntry)
 
@@ -25,7 +27,7 @@ func Routes(router *gin.Engine) {
 		r0.GET("/wallet", getWallets)
 		r0.POST("/wallet", addWallet)
 		r0.DELETE("/wallet/:id", deleteWallet)
-		r0.GET("/wallet/hide/:id", hideWallet)
+		r0.PATCH("/wallet/hide/:id", hideWallet)
 	}
 }
 
@@ -33,5 +35,13 @@ func getDate(c *gin.Context) {
 
 	date := time.Now().Format("2006-01-02")
 
-	c.IndentedJSON(http.StatusOK, date)
+	c.JSON(http.StatusOK, date)
+}
+
+func paramID(c *gin.Context) (int, bool) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if check.IfError(err) {
+		return 0, false
+	}
+	return id, true
 }

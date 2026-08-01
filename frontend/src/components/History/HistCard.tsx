@@ -1,15 +1,15 @@
 import { createMemo, createSignal, For, onMount } from "solid-js"
-import { allEntries, setShowEnties } from "../../functions/exports"
-import { syncEntries } from "../../functions/atstart";
+import { allEntries } from "../../functions/exports"
 import EntryRow from "../All/EntryRow";
+import { getDateFromCurrent } from "../../functions/date";
+import { syncEntries } from "../../functions/atstart";
 
 function HistCard() {
 
   const [search, setSearch] = createSignal("");
 
-  const update = (value: string) => {
-    setShowEnties(value);
-    syncEntries();
+  const update = async (value: string) => {
+    await syncEntries(getDateFromCurrent(value));
   };
 
   const filteredEntries = createMemo(() => {

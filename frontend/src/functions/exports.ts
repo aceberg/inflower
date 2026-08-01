@@ -57,5 +57,4 @@ export const [appConfig, setAppConfig] = createSignal<Conf>(emptyConf);
 export const [themePath, setThemePath] = createSignal(apiPath+"/fs/public/themes/cerulean/bootstrap.min.css");
 export const [walletList, setWalletList] = createSignal<string[]>([]);
 
-export const [showEnties, setShowEnties] = createSignal<string>("month");
-export const [today, setToday] = createSignal<string>("");
+export const [today, setToday] = createSignal<string>(new Date().toJSON().slice(0, 10));

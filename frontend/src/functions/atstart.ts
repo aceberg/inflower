@@ -1,14 +1,9 @@
 import { apiGetEntries, apiGetAllWallets, apiGetDate, apiGetConfig, apiPath } from "./api";
-import { allWallets, appConfig, Entry, setAllEntries, setAllWallets, setAppConfig, setShowEnties, setThemePath, setToday, setWalletList, showEnties } from "./exports";
+import { getDateFromCurrent } from "./date";
+import { allWallets, appConfig, Entry, setAllEntries, setAllWallets, setAppConfig,  setThemePath, setToday, setWalletList } from "./exports";
 
 export async function runAtStart() {
   
-  // "today", "decade" or "month" for the main page
-  const value = localStorage.getItem("showEnties");
-  if (value !== null && value !== "") {
-    setShowEnties(String(value));
-  }
-
   await syncAppConfig();
 
   await syncDate();
@@ -24,12 +19,19 @@ export async function syncDate() {
 }
 
 export async function syncEntriesAndWallets() {
-  await syncEntries();
+  const value = localStorage.getItem("showEnties");
+  let period = "month";
+  if (value !== null && value !== "") {
+    period = value;
+  } 
+
+  await syncEntries(getDateFromCurrent(period));
   await syncWallets();
 }
 
-export async function syncEntries() {
-  const entries = await apiGetEntries(showEnties());
+export async function syncEntries(date:string) {
+  
+  const entries = await apiGetEntries(date);
 
   if (entries !== null) {
     entries.sort((a :Entry, b :Entry) => b.ID - a.ID);

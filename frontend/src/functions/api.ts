@@ -9,8 +9,8 @@ export const apiGetConfig = async () => {
   return res;
 };
 
-export const apiGetEntries = async (period:string) => {
-  const url = apiPath+'/api/entry/'+period;
+export const apiGetEntries = async (date:string) => {
+  const url = apiPath+'/api/entry/'+date;
   const entries = await (await fetch(url)).json();
 
   return entries;
@@ -63,6 +63,6 @@ export const apiDelWallet = async (id:number) => {
 export const apiHideWallet = async (id:number) => {
 
   await fetch(`${apiPath}/api/wallet/hide/${id}`, {
-    method: "GET",
+    method: "PATCH",
   });
 };

@@ -1,20 +1,30 @@
-import { For } from "solid-js"
-import { allEntries, setShowEnties, showEnties } from "../../functions/exports"
+import { createSignal, For, onMount } from "solid-js"
+import { allEntries } from "../../functions/exports"
 import EntryRow from "../All/EntryRow"
 import { syncEntries } from "../../functions/atstart";
+import { getDateFromCurrent } from "../../functions/date";
 
 function EntryCard() {
 
+  const [showEntiesPeriod, setShowEntiesPeriod] = createSignal<string>("month");
+
   const update = (value: string) => {
-    setShowEnties(value);
-    syncEntries();
+    setShowEntiesPeriod(value);
+    syncEntries(getDateFromCurrent(value));
     localStorage.setItem("showEnties", value);
   };
+
+  onMount(() => {
+    const value = localStorage.getItem("showEnties");
+    if (value !== null && value !== "") {
+      setShowEntiesPeriod(value);
+    } 
+  });
 
   return (
   <div class="card border-primary">
     <div class="card-header">
-      <select class="form-select form-select-sm w-auto" value={showEnties()}
+      <select class="form-select form-select-sm w-auto" value={showEntiesPeriod()}
         onChange={e => update(e.currentTarget.value)}>
         <option value="today">Today</option>
         <option value="decade">Decade</option>

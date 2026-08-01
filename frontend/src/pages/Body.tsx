@@ -7,6 +7,7 @@ import { syncEntriesAndWallets } from "../functions/atstart";
 function Body() {
 
   onMount(async () => {
+
     await syncEntriesAndWallets();
   });
 

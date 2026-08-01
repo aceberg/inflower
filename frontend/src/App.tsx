@@ -3,7 +3,7 @@ import { Router, Route } from "@solidjs/router";
 import './App.css';
 
 import Body from './pages/Body';
-import Header from './components/Header';
+import Header from './components/All/Header';
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { runAtStart } from "./functions/atstart";

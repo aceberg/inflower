@@ -1,5 +1,5 @@
-import { themePath } from "../functions/exports";
-import { GithubIcon } from "../functions/icons";
+import { themePath } from "../../functions/exports";
+import { GithubIcon } from "../../functions/icons";
 
 function Header() {
 
