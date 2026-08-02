@@ -7,7 +7,6 @@ export interface Conf {
 	Port:	   string;
 	Theme:	   string;
 	Color:     string;
-	NodePath:  string;
 	Categories: string[];
 };
 
@@ -46,7 +45,6 @@ export const emptyConf:Conf = {
 	Port:	 "",
 	Theme:	 "",
 	Color:   "",
-	NodePath: "",
 	Categories: [],
 };
 

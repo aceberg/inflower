@@ -47,7 +47,7 @@ export async function syncWallets() {
   if (wallets !== null) {
     setAllWallets(wallets);
 
-    setWalletList(allWallets.map(w => w.Name));
+    setWalletList(allWallets.filter(w => !w.Hide).map(w => w.Name));
   }
 }
 

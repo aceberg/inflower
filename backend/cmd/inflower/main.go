@@ -11,15 +11,13 @@ import (
 )
 
 const dirPath = "/data/inflower"
-const nodePath = ""
 
 func main() {
 	dirPtr := flag.String("d", dirPath, "Path to config dir")
-	nodePtr := flag.String("n", nodePath, "Path to node modules")
 	flag.Parse()
 
 	// Make AppConfig
-	conf.Start(*dirPtr, *nodePtr)
+	conf.Start(*dirPtr)
 
 	gdb.Start()
 

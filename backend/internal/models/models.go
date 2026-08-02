@@ -9,7 +9,6 @@ type Conf struct {
 	DirPath    string
 	ConfPath   string
 	DBPath     string
-	NodePath   string
 	Version    string
 	Categories []string
 }

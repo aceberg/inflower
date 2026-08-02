@@ -5,8 +5,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/aceberg/inflower/internal/check"
 	"github.com/gin-gonic/gin"
+
+	"github.com/aceberg/inflower/internal/check"
 )
 
 // Routes - start API routes

@@ -12,7 +12,7 @@ import (
 // Write - write config to file
 func Write(config models.Conf) {
 
-	log.Println("INFO: Writing new config to " + config.ConfPath)
+	log.Println("INFO: Writing config to", config.ConfPath)
 
 	viper.SetConfigFile(config.ConfPath)
 	viper.SetConfigType("yaml")
@@ -21,7 +21,7 @@ func Write(config models.Conf) {
 	viper.Set("PORT", config.Port)
 	viper.Set("THEME", config.Theme)
 	viper.Set("COLOR", config.Color)
-	viper.Set("NODEPATH", config.NodePath)
+
 	viper.Set("CATEGORIES", config.Categories)
 
 	err := viper.WriteConfig()

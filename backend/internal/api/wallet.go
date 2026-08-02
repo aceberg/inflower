@@ -3,24 +3,27 @@ package api
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/aceberg/inflower/internal/check"
 	"github.com/aceberg/inflower/internal/gdb"
 	"github.com/aceberg/inflower/internal/models"
-	"github.com/gin-gonic/gin"
 )
 
 func deleteWallet(c *gin.Context) {
 
 	id, ok := paramID(c)
 	if ok {
-		gdb.DeleteWallet(id)
+		err := gdb.DeleteWallet(id)
+		check.IfError(err)
 	}
 
 	c.Status(http.StatusNoContent)
 }
 
 func getWallets(c *gin.Context) {
-	allWallets, _ := gdb.SelectWallets()
+	allWallets, err := gdb.SelectWallets()
+	check.IfError(err)
 	c.JSON(http.StatusOK, allWallets)
 }
 
@@ -29,7 +32,8 @@ func addWallet(c *gin.Context) {
 
 	err := c.ShouldBind(&wallet)
 	if !check.IfError(err) && wallet.Name != "" {
-		gdb.UpdateWallet(wallet)
+		err = gdb.UpdateWallet(wallet)
+		check.IfError(err)
 	}
 
 	c.Redirect(http.StatusFound, c.Request.Referer())
@@ -39,9 +43,8 @@ func hideWallet(c *gin.Context) {
 
 	id, ok := paramID(c)
 	if ok {
-		wallet := gdb.SelectWalletByID(id)
-		wallet.Hide = !wallet.Hide
-		gdb.UpdateWallet(wallet)
+		err := gdb.ToggleWalletHide(id)
+		check.IfError(err)
 	}
 
 	c.Status(http.StatusNoContent)

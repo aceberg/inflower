@@ -63,10 +63,6 @@ function Basic() {
                </td>
             </tr>
             <tr>
-              <td>Local node-bootstrap URL</td>
-              <td><input name="node" type="text" class="form-control" value={appConfig().NodePath}></input></td>
-            </tr>
-            <tr>
               <td><button type="submit" class="btn btn-primary">Save</button></td>
               <td></td>
             </tr>
