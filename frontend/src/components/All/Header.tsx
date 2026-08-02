@@ -34,10 +34,10 @@ function Header() {
               <a class="nav-link active" href="/config/">Config</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/history/">History</a>
+              <a class="nav-link active" href="/months/">Months</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/months/">Months</a>
+              <a class="nav-link active" href="/history/">History</a>
             </li>
           </ul>
 

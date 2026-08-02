@@ -30,3 +30,12 @@ func SelectEntriesByDate(date string) (entries []models.Entry, err error) {
 
 	return entries, err
 }
+
+// GetEntriesAfter - get Entries after date
+func GetEntriesAfter(date string) (entries []models.Entry, err error) {
+
+	tab := db.Table("entries")
+	err = tab.Where("date > ?", date).Order("date DESC").Find(&entries).Error
+
+	return entries, err
+}

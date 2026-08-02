@@ -29,7 +29,12 @@ func getEntries(c *gin.Context) {
 	date := strings.TrimPrefix(c.Param("date"), "/")
 
 	if date != "" {
-		entries, err = gdb.SelectEntriesByDate(date)
+		after := c.Query("after")
+		if after == "yes" {
+			entries, err = gdb.GetEntriesAfter(date)
+		} else {
+			entries, err = gdb.SelectEntriesByDate(date)
+		}
 	} else {
 		entries, err = gdb.SelectEntries()
 	}

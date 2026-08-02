@@ -1,35 +1,21 @@
-import { createSignal } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import CompareTotals from "./CompareTotals";
-import { apiGetEntries } from "../../functions/api";
-import { Entry } from "../../functions/models";
+import { compareMonths, CompareResult, shiftMonth } from "../../functions/months";
 import { formatDate } from "../../functions/format";
+import { CarLeft, CarRight } from "../../functions/icons";
 
 function Compare() {
 
-  const [entries1, setEntries1] = createSignal([]);
-  const [entries2, setEntries2] = createSignal([]);
-  const [entries1m, setEntries1m] = createSignal([]);
-  const [entries2m, setEntries2m] = createSignal([]);
+  const [comparison, setComparison] = createSignal<CompareResult>();
+  const [m1, setM1] = createSignal<string>(formatDate("prevm"));
+  const [m2, setM2] = createSignal<string>(formatDate("month"));
 
-  const getData = async () => {
-    const e1 = (await apiGetEntries(formatDate("prevm")));
-    const e2 = (await apiGetEntries(formatDate("month")));
+  createEffect(async () => {
+    const month1 = m1();
+    const month2 = m2();
 
-    setEntries1(e1.filter(
-      (entry: Entry) => entry.AccFrom === "" && entry.AccTo !== ""
-    ));
-    setEntries2(e2.filter(
-      (entry: Entry) => entry.AccFrom === "" && entry.AccTo !== ""
-    ));
-    setEntries1m(e1.filter(
-      (entry: Entry) => entry.AccFrom !== "" && entry.AccTo === ""
-    ));
-    setEntries2m(e2.filter(
-      (entry: Entry) => entry.AccFrom !== "" && entry.AccTo === ""
-    ));
-  };
-
-  getData();
+    setComparison(await compareMonths(month1, month2));
+  });
 
   return (
     <div class="card border-primary">
@@ -37,10 +23,18 @@ function Compare() {
         <table class="table table-sm table-hover table-borderless">
           <thead>
             <tr>
-              <th>Category</th>
-              <th class="text-end">Amount 1</th>
               <th></th>
-              <th class="text-end">Amount 2</th>
+              <th class="d-flex">
+                <div class="my-btn p-2 text-body" onClick={() => setM1(shiftMonth(m1(), -1))}><CarLeft></CarLeft></div>
+                <input type="date" class="form-control" placeholder="Date" value={m1()+"-01"} onInput={e => setM1(e.currentTarget.value.slice(0, 7))}></input>
+                <div class="my-btn p-2 text-body" onClick={() => setM1(shiftMonth(m1(), 1))}><CarRight></CarRight></div>
+              </th>
+              <th></th>
+              <th class="d-flex">
+                <div class="my-btn p-2 text-body" onClick={() => setM2(shiftMonth(m2(), -1))}><CarLeft></CarLeft></div>
+                <input type="date" class="form-control" placeholder="Date" value={m2()+"-01"} onInput={e => setM2(e.currentTarget.value.slice(0, 7))}></input>
+                <div class="my-btn p-2 text-body" onClick={() => setM2(shiftMonth(m2(), 1))}><CarRight></CarRight></div>
+              </th>
               <th></th>
             </tr>
           </thead>
@@ -48,14 +42,14 @@ function Compare() {
             <tr>
               <td colSpan={5} class="fw-bold table-active">Income</td>
             </tr>
-            <CompareTotals entries1={entries1()} entries2={entries2()}></CompareTotals>
+            <CompareTotals money={comparison()?.income} totals={comparison()?.incomeTotals}></CompareTotals>
             <tr>
               <td colSpan={5}><hr></hr></td>
             </tr>
             <tr>
               <td colSpan={5} class="fw-bold table-active">Expenses</td>
             </tr>
-            <CompareTotals entries1={entries1m()} entries2={entries2m()}></CompareTotals>
+            <CompareTotals money={comparison()?.expenses} totals={comparison()?.expenseTotals}></CompareTotals>
           </tbody>
         </table>
       </div>

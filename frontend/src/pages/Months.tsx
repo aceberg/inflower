@@ -1,4 +1,5 @@
 import Compare from "../components/Months/Compare";
+import PieCard from "../components/Months/PieCard";
 
 function Months() {
 
@@ -7,7 +8,9 @@ function Months() {
       <div class="col-md mt-4">
         <Compare></Compare>
       </div>
-      <div class="col-md mt-4"></div>
+      <div class="col-md mt-4">
+        <PieCard></PieCard>
+      </div>
     </div>
   )
 }

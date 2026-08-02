@@ -17,10 +17,6 @@ export function formatDate(date:string): string {
         case "year":
             return configStore.today().slice(0, 4);
 
-        case "decade": {
-            return configStore.today().slice(0, 9);
-        }
-
         default:
             return "";
     }
