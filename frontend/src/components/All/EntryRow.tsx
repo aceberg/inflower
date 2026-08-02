@@ -1,7 +1,7 @@
 import { Show } from "solid-js";
-import { apiDelEntry } from "../../functions/api";
-import { syncEntriesAndWallets } from "../../functions/atstart";
 import { SquareXIcon, XIcon } from "../../functions/icons";
+import { formatMoney } from "../../functions/format";
+import { entryStore } from "../../store/entries";
 
 let beforeDate = "";
 
@@ -22,8 +22,7 @@ function EntryRow(_props: any) {
 
   const handleDelete = async () => {
     if (confirm(`Delete ${_props.entry.Date}: ${_props.entry.Amount}?`)) {
-      await apiDelEntry(_props.entry.ID);
-      await syncEntriesAndWallets();
+      entryStore.remove(_props.entry.ID);
     }
   };
 
@@ -33,7 +32,7 @@ function EntryRow(_props: any) {
       <td>{_props.entry.Date}</td>
       <td>{_props.entry.AccFrom}→{_props.entry.AccTo}</td>
       <td>{_props.entry.Category}</td>
-      <td class="d-flex flex-row-reverse">{amountPrefix}&nbsp;&nbsp;{(_props.entry.Amount/100).toFixed(2)}</td>
+      <td class="d-flex flex-row-reverse">{amountPrefix}&nbsp;&nbsp;{formatMoney(_props.entry.Amount)}</td>
       <td>{_props.entry.Currency}</td>
       <td>{_props.entry.Note}</td>
       <Show

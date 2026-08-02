@@ -1,40 +1,42 @@
 import { createMemo, createSignal, For, onMount } from "solid-js"
-import { allEntries } from "../../functions/exports"
 import EntryRow from "../All/EntryRow";
-import { getDateFromCurrent } from "../../functions/date";
-import { syncEntries } from "../../functions/atstart";
+import { entryStore } from "../../store/entries";
 
 function HistCard() {
 
   const [search, setSearch] = createSignal("");
 
-  const update = async (value: string) => {
-    await syncEntries(getDateFromCurrent(value));
-  };
-
   const filteredEntries = createMemo(() => {
     const q = search().trim().toLowerCase();
 
-    if (!q) return allEntries;
+    if (!q) return entryStore.entries;
 
-    return allEntries.filter(entry =>
+    return entryStore.entries.filter(entry =>
       Object.values(entry).some(value =>
         String(value).toLowerCase().includes(q)
       )
     );
   });
 
-  onMount(() => {
-    update("year");
+  const [showEntiesPeriod, setShowEntiesPeriod] = createSignal<string>("year");
+
+  const update = (value: string) => {
+    entryStore.setHistPeriod(value);
+  };
+
+  onMount(async () => {
+    setShowEntiesPeriod(entryStore.getHistPeriod()); 
+    await entryStore.reloadHist();
   });
 
   return (
   <div class="card border-primary">
     <div class="card-header">
       <div class="d-flex justify-content-between">
-        <select class="form-select form-select-sm w-auto"
+        <select class="form-select form-select-sm w-auto" value={showEntiesPeriod()}
           onChange={e => update(e.currentTarget.value)}>
           <option value="month">Month</option>
+          <option value="prevm">Previous Month</option>
           <option value="year" selected>Year</option>
           <option value="all">All</option>
         </select>

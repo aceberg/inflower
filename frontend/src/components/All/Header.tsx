@@ -1,11 +1,11 @@
-import { themePath } from "../../functions/exports";
 import { GithubIcon } from "../../functions/icons";
+import { configStore } from "../../store/configs";
 
 function Header() {
 
   return (
     <>
-    <link rel="stylesheet" href={themePath()}></link> {/* theme */}
+    <link rel="stylesheet" href={configStore.themePath()}></link> {/* theme */}
     <nav class="navbar navbar-expand-md navbar-dark bg-primary">
       <div class="container-lg">
 

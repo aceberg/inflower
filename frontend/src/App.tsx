@@ -6,12 +6,13 @@ import Body from './pages/Body';
 import Header from './components/All/Header';
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { runAtStart } from "./functions/atstart";
+import { configStore } from "./store/configs";
 
 function App() {
 
   onMount(async () => {
-    await runAtStart();
+    await configStore.syncDate();
+    await configStore.reload();
   });
 
   const Config = lazy(() => import("./pages/Config"));

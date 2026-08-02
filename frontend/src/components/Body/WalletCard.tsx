@@ -1,18 +1,10 @@
-import { createMemo, For } from "solid-js"
-import { allWallets } from "../../functions/exports"
+import { For } from "solid-js"
 import WalletRow from "./WalletRow"
+import { formatMoney } from "../../functions/format";
+import { walletStore } from "../../store/wallets";
 
 function WalletCard() {
   
-  const totals = createMemo(() =>
-    allWallets.reduce<Record<string, number>>((acc, wallet) => {
-      if (wallet.Hide) return acc;
-
-      acc[wallet.Currency] = (acc[wallet.Currency] ?? 0) + wallet.Amount;
-      return acc;
-    }, {})
-  );
-
   return (
   <div class="card border-primary">
     <div class="card-header">
@@ -21,7 +13,7 @@ function WalletCard() {
     <div class="card-body table-responsive">
       <table class="table table-sm table-hover table-borderless">
         <tbody>
-          <For each={allWallets}>{(wallet) =>
+          <For each={walletStore.wallets}>{(wallet) =>
             !wallet.Hide && <WalletRow wallet={wallet} />
           }</For>
           <tr>
@@ -32,11 +24,11 @@ function WalletCard() {
             <td></td>
             <td></td>
           </tr>
-          <For each={Object.entries(totals())}>
+          <For each={Object.entries(walletStore.totalsMain())}>
             {([currency, amount]) => (
             <tr>
               <td></td>
-              <td class="d-flex flex-row-reverse">{(amount / 100).toFixed(2)}</td>
+              <td class="d-flex flex-row-reverse">{formatMoney(amount)}</td>
               <td>{currency}</td>
             </tr>
             )}

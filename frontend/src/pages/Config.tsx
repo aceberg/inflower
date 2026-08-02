@@ -2,13 +2,13 @@ import { onMount } from "solid-js";
 import Basic from "../components/Config/Basic"
 import Category from "../components/Config/Category"
 import Wallets from "../components/Config/Wallest"
-import { syncWallets } from "../functions/atstart";
+import { walletStore } from "../store/wallets";
 
 
 function Config() {
 
   onMount(async () => {
-    await syncWallets();
+    walletStore.reload();
   });
 
   return (

@@ -1,7 +1,8 @@
 import { createSignal, For } from "solid-js";
-import { appConfig, emptyEntry, Entry, today, walletList } from "../../functions/exports";
-import { apiAddEntry } from "../../functions/api";
-import { syncEntriesAndWallets } from "../../functions/atstart";
+import { emptyEntry, Entry } from "../../functions/models";
+import { walletStore } from "../../store/wallets";
+import { configStore } from "../../store/configs";
+import { entryStore } from "../../store/entries";
 
 function AddRow() {
 
@@ -33,27 +34,26 @@ function AddRow() {
 
   const handleAdd = async () => {
     if (newEntry().Date === "") {
-      newEntry().Date = today();
+      newEntry().Date = configStore.today();
     }
-    await apiAddEntry(newEntry());
+    entryStore.add(newEntry());
     setNewEntry({
       ...emptyEntry,
       Date: newEntry().Date,
     });
     setEmptyAmount("0");
     setEmptyAmount("");
-    await syncEntriesAndWallets();
   };
 
   return (
     <div class="col-md mt-4">
       <div class="input-group d-flex flex-column flex-sm-row">
-        <input type="date" class="form-control w-auto" placeholder="Date" value={today()} onInput={e => update("Date", e.currentTarget.value)}></input>
+        <input type="date" class="form-control w-auto" placeholder="Date" value={configStore.today()} onInput={e => update("Date", e.currentTarget.value)}></input>
         <select class="form-select w-auto" value={newEntry().AccFrom} 
           onChange={e => update("AccFrom", e.currentTarget.value)}
         >
           <option value="" disabled>From</option>
-          <For each={walletList()}>
+          <For each={walletStore.list}>
             {wallet => (
               <option value={wallet}>
                 {wallet}
@@ -65,7 +65,7 @@ function AddRow() {
           onChange={e => update("AccTo", e.currentTarget.value)}
         >
           <option value="" disabled>To</option>
-          <For each={walletList()}>
+          <For each={walletStore.list}>
             {wallet => (
               <option value={wallet}>
                 {wallet}
@@ -77,7 +77,7 @@ function AddRow() {
           onChange={e => update("Category", e.currentTarget.value)}
         >
           <option value="" disabled>Category</option>
-          <For each={appConfig().Categories}>
+          <For each={configStore.config.Categories}>
             {cat => (
               <option value={cat}>
                 {cat}

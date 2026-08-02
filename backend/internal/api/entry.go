@@ -43,7 +43,7 @@ func addEntry(c *gin.Context) {
 
 	err := c.ShouldBind(&entry)
 
-	if !check.IfError(err) || entry.Amount != 0 {
+	if !check.IfError(err) && entry.Amount != 0 {
 
 		if entry.Date == "" {
 			entry.Date = time.Now().Format("2006-01-02")

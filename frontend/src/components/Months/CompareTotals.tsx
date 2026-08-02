@@ -1,4 +1,5 @@
 import { createMemo, For } from "solid-js";
+import { formatMoney } from "../../functions/format";
 
 function CompareTotals(_props: any) {
 
@@ -68,9 +69,9 @@ function CompareTotals(_props: any) {
       {(row) => (
         <tr>
           <td>{row.category}</td>
-          <td class="text-end">{(row.amount1 / 100).toFixed(2)}</td>
+          <td class="text-end">{formatMoney(row.amount1)}</td>
           <td>{row.currency}</td>
-          <td class="text-end">{(row.amount2 / 100).toFixed(2)}</td>
+          <td class="text-end">{formatMoney(row.amount2)}</td>
           <td>{row.currency}</td>
         </tr>
       )}
@@ -82,9 +83,9 @@ function CompareTotals(_props: any) {
       {(row) => (
         <tr class="fw-bold">
           <td>Total</td>
-          <td class="text-end">{(row.amount1 / 100).toFixed(2)}</td>
+          <td class="text-end">{formatMoney(row.amount1)}</td>
           <td>{row.currency}</td>
-          <td class="text-end">{(row.amount2 / 100).toFixed(2)}</td>
+          <td class="text-end">{formatMoney(row.amount2)}</td>
           <td>{row.currency}</td>
         </tr>
       )}

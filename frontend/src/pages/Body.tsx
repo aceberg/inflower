@@ -2,13 +2,15 @@ import { onMount } from "solid-js";
 import AddRow from "../components/Body/AddRow"
 import EntryCard from "../components/Body/EntryCard"
 import WalletCard from "../components/Body/WalletCard"
-import { syncEntriesAndWallets } from "../functions/atstart";
+import { walletStore } from "../store/wallets";
+import { entryStore } from "../store/entries";
 
 function Body() {
 
   onMount(async () => {
 
-    await syncEntriesAndWallets();
+    entryStore.reload();
+    walletStore.reload();
   });
 
   return (

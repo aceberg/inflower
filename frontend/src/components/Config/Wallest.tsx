@@ -1,28 +1,19 @@
-import { createMemo, For } from "solid-js"
-import { allWallets } from "../../functions/exports"
-import { apiDelWallet, apiHideWallet, apiPath } from "../../functions/api";
-import { syncWallets } from "../../functions/atstart";
+import { For } from "solid-js";
+import { apiPath } from "../../functions/api";
 import { SquareXIcon } from "../../functions/icons";
+import { formatMoney } from "../../functions/format";
+import { walletStore } from "../../store/wallets";
 
 function Wallets() {
 
-  const totals = createMemo(() =>
-    allWallets.reduce<Record<string, number>>((acc, wallet) => {
-      acc[wallet.Currency] = (acc[wallet.Currency] ?? 0) + wallet.Amount;
-      return acc;
-    }, {})
-  );
-
   const handleDelete = async (id:number, name:string) => {
     if (confirm(`Delete ${name}?`)) {
-      await apiDelWallet(id);
-      await syncWallets();
+      walletStore.remove(id);
     }
   };
 
-  const handleHide = async (id:number) => {
-    await apiHideWallet(id);
-    await syncWallets();
+  const handleHide = (id:number) => {
+    walletStore.hide(id);
   };
 
   return (
@@ -45,7 +36,7 @@ function Wallets() {
             </tr>
           </thead>
           <tbody>
-          <For each={allWallets}>{(wallet) =>
+          <For each={walletStore.wallets}>{(wallet) =>
             <tr>
               <td>
                 <div class="form-check form-switch">
@@ -53,7 +44,7 @@ function Wallets() {
                 </div>
               </td>
               <td>{wallet.Name}</td>
-              <td class="d-flex flex-row-reverse">{(wallet.Amount/100).toFixed(2)}</td>
+              <td class="d-flex flex-row-reverse">{formatMoney(wallet.Amount)}</td>
               <td>{wallet.Currency}</td>
               <td class="my-btn" onClick={() => handleDelete(wallet.ID, wallet.Name)} title="Delete">
                 <SquareXIcon></SquareXIcon>
@@ -70,12 +61,12 @@ function Wallets() {
             <td></td>
             <td></td>
           </tr>
-          <For each={Object.entries(totals())}>
+          <For each={Object.entries(walletStore.totalsAll())}>
             {([currency, amount]) => (
             <tr>
               <td></td>
               <td></td>
-              <td class="d-flex flex-row-reverse">{(amount / 100).toFixed(2)}</td>
+              <td class="d-flex flex-row-reverse">{formatMoney(amount)}</td>
               <td>{currency}</td>
               <td></td>
             </tr>

@@ -1,18 +1,17 @@
 import { For, Show } from "solid-js";
 import { apiPath } from "../../functions/api"
-import { appConfig, setThemePath } from "../../functions/exports"
-import { changeBackColor } from "../../functions/atstart";
+import { configStore } from "../../store/configs";
 
 function Basic() {
 
   const themes = ["cerulean", "cosmo", "cyborg", "darkly", "emerald", "flatly", "grass", "grayscale", "journal", "litera", "lumen", "lux", "materia", "minty", "morph", "ocean", "pulse", "quartz", "sand", "sandstone", "simplex", "sketchy", "slate", "solar", "spacelab", "superhero", "united", "vapor", "wood", "yeti", "zephyr"];
 
   const handleTheme = (theme:string) => {
-    setThemePath(apiPath+"/fs/public/themes/"+theme+"/bootstrap.min.css");
+    configStore.setThemePath(apiPath+"/fs/public/themes/"+theme+"/bootstrap.min.css");
   };
 
   const handleColor = (color:string) => {
-    changeBackColor(color);
+    configStore.changeBackColor(color);
   };
 
   return (
@@ -24,11 +23,11 @@ function Basic() {
           <tbody>
             <tr>
               <td>Host</td>
-              <td><input name="host" type="text" class="form-control" value={appConfig().Host}></input></td>
+              <td><input name="host" type="text" class="form-control" value={configStore.config.Host}></input></td>
             </tr>
             <tr>
               <td>Port</td>
-              <td><input name="port" type="text" class="form-control" value={appConfig().Port}></input></td>
+              <td><input name="port" type="text" class="form-control" value={configStore.config.Port}></input></td>
             </tr>
             <tr>
               <td>Theme</td>
@@ -36,7 +35,7 @@ function Basic() {
                 <select name="theme" class="form-select" onChange={(e)=>handleTheme(e.currentTarget.value)}>
                 <For each={themes}>{theme =>
                   <Show
-                    when={theme == appConfig().Theme}
+                    when={theme == configStore.config.Theme}
                     fallback={<option value={theme}>{theme}</option>}
                   >
                     <option value={theme} selected>{theme}</option>
@@ -50,7 +49,7 @@ function Basic() {
                <td>
                 <select name="color" class="form-select" onChange={(e)=>handleColor(e.currentTarget.value)}>
                 <Show
-                  when={appConfig().Color == "dark"}
+                  when={configStore.config.Color == "dark"}
                   fallback={<>
                     <option value="dark">dark</option>
                     <option value="light" selected>light</option>

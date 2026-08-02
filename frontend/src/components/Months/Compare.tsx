@@ -1,8 +1,8 @@
 import { createSignal } from "solid-js";
 import CompareTotals from "./CompareTotals";
 import { apiGetEntries } from "../../functions/api";
-import { Entry } from "../../functions/exports";
-import { getDateFromCurrent } from "../../functions/date";
+import { Entry } from "../../functions/models";
+import { formatDate } from "../../functions/format";
 
 function Compare() {
 
@@ -12,8 +12,8 @@ function Compare() {
   const [entries2m, setEntries2m] = createSignal([]);
 
   const getData = async () => {
-    const e1 = (await apiGetEntries(getDateFromCurrent("prevm")));
-    const e2 = (await apiGetEntries(getDateFromCurrent("month")));
+    const e1 = (await apiGetEntries(formatDate("prevm")));
+    const e2 = (await apiGetEntries(formatDate("month")));
 
     setEntries1(e1.filter(
       (entry: Entry) => entry.AccFrom === "" && entry.AccTo !== ""
