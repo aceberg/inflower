@@ -1,0 +1,13 @@
+[Unit]
+Description=inflower
+Documentation=https://github.com/aceberg/inflower
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=%i
+ExecStart=/usr/bin/inflower -d /home/%i/.config/inflower/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

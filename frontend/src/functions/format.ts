@@ -5,6 +5,18 @@ export function formatDate(date:string): string {
         case "today":
             return configStore.today();
 
+        case "week": {
+            const d = new Date(configStore.today());
+            d.setDate(d.getDate() - 7);
+            return d.toISOString().slice(0, 10)+"?after=yes";
+        }
+
+        case "last10": {
+            const d = new Date(configStore.today());
+            d.setDate(d.getDate() - 10);
+            return d.toISOString().slice(0, 10)+"?after=yes";
+        }
+
         case "month":
             return configStore.today().slice(0, 7);
 

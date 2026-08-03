@@ -35,6 +35,8 @@ function HistCard() {
       <div class="d-flex justify-content-between">
         <select class="form-select form-select-sm w-auto" value={showEntiesPeriod()}
           onChange={e => update(e.currentTarget.value)}>
+          <option value="week">Week</option>
+          <option value="last10">10 Days</option>
           <option value="month">Month</option>
           <option value="prevm">Previous Month</option>
           <option value="year" selected>Year</option>

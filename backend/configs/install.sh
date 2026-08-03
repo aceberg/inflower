@@ -1,4 +1,5 @@
 #!/bin/sh
 
-cp watchyourlan /usr/bin/
-cp watchyourlan.service /lib/systemd/system/
+cp inflower /usr/bin/
+cp inflower.service /lib/systemd/system/
+cp inflower@.service /lib/systemd/system/

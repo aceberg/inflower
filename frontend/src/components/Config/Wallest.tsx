@@ -1,4 +1,4 @@
-import { For } from "solid-js";
+import { For, onMount } from "solid-js";
 import { apiPath } from "../../functions/api";
 import { SquareXIcon } from "../../functions/icons";
 import { formatMoney } from "../../functions/format";
@@ -15,6 +15,10 @@ function Wallets() {
   const handleHide = (id:number) => {
     walletStore.hide(id);
   };
+
+  onMount(async () => {
+    await walletStore.reload();
+  });
 
   return (
     <div class="card border-primary">

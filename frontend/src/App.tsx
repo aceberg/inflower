@@ -11,8 +11,10 @@ import { configStore } from "./store/configs";
 function App() {
 
   onMount(async () => {
-    await configStore.syncDate();
-    await configStore.reload();
+    await Promise.all([
+      configStore.syncDate(),
+      configStore.reload(),
+    ]);
   });
 
   const Config = lazy(() => import("./pages/Config"));

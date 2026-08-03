@@ -12,7 +12,7 @@ RUN go mod download
 COPY backend/ .
 
 ARG TARGETPLATFORM
-RUN CGO_ENABLED=0 xx-go build -ldflags='-w -s' -o /inflower ./cmd/inflower
+RUN CGO_ENABLED=0 xx-go build -trimpath -ldflags='-w -s' -o /inflower ./cmd/inflower
 
 
 FROM scratch

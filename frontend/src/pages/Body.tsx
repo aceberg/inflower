@@ -8,9 +8,10 @@ import { entryStore } from "../store/entries";
 function Body() {
 
   onMount(async () => {
-
-    entryStore.reload();
-    walletStore.reload();
+    await Promise.all([
+        entryStore.reload(),
+        walletStore.reload(),
+    ]);
   });
 
   return (

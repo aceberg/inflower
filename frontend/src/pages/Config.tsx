@@ -1,15 +1,9 @@
-import { onMount } from "solid-js";
 import Basic from "../components/Config/Basic"
 import Category from "../components/Config/Category"
 import Wallets from "../components/Config/Wallest"
-import { walletStore } from "../store/wallets";
 
 
 function Config() {
-
-  onMount(async () => {
-    walletStore.reload();
-  });
 
   return (
     <div class="row mb-4">
