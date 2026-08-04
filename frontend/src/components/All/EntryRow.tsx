@@ -21,8 +21,8 @@ function EntryRow(_props: any) {
     : "";
 
   const handleDelete = async () => {
-    if (confirm(`Delete ${_props.entry.Date}: ${_props.entry.Amount}?`)) {
-      entryStore.remove(_props.entry.ID);
+    if (confirm(`Delete ${_props.entry.Date}: ${formatMoney(_props.entry.Amount)}?`)) {
+      entryStore.remove(_props.entry.ID, _props.history);
     }
   };
 

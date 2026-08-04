@@ -67,9 +67,13 @@ async function reloadHist() {
     await getEntries(formatDate(period));
 }
 
-async function remove(id: number) {
+async function remove(id: number, hist: boolean) {
     await apiDelEntry(id);
-    await reload();
+    if (hist) {
+        await reloadHist();
+    } else {
+        await reload();
+    }
     walletStore.reload();
 }
 
