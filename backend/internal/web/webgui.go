@@ -42,8 +42,8 @@ func Gui() {
 		"\n=================================== " + colorReset)
 
 	gin.SetMode(gin.ReleaseMode)
-	// router := gin.New()
-	router := gin.Default()
+	router := gin.New()
+	// router := gin.Default()
 	router.Use(gin.Recovery())
 
 	templ := template.Must(template.New("").ParseFS(templFS, "templates/*"))

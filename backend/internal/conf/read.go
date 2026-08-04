@@ -13,7 +13,7 @@ func readConfig(path string) (config models.Conf) {
 	viper.SetDefault("PORT", "8859")
 	viper.SetDefault("THEME", "cerulean")
 	viper.SetDefault("COLOR", "dark")
-	viper.SetDefault("CATEGORIES", []string{"Food", "Cafe", "Home", "Me", "Clothes"})
+	viper.SetDefault("CATEGORIES", []string{"Food", "Cafe", "Home", "Clothes"})
 
 	viper.AutomaticEnv() // Get ENVIRONMENT variables
 
